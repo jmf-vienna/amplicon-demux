@@ -9,5 +9,5 @@ rule all:
     input:
         expand(
             "fastq/front_adapter_trimmed/{pool}.fastq",
-            pool=config["default"]["pool"]["id"],
+            pool=get_pool(),
         ),
