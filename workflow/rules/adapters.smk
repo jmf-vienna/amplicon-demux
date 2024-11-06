@@ -8,5 +8,6 @@ rule front_adapter_trimmed:
     shell:
         "cutadapt"
         " --front {params.front}"
+        " --rename='{{header}} front_adapter={{match_sequence}}'"
         " --output {output}"
         " {input}"
