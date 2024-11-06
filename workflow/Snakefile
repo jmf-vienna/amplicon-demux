@@ -1,2 +1,13 @@
+configfile: "config.yaml"
+
+
 include: "rules/common.smk"
 include: "rules/adapters.smk"
+
+
+rule all:
+    input:
+        expand(
+            "fastq/front_adapter_trimmed/{pool}.fastq",
+            pool=config["default"]["pool"]["id"],
+        ),
