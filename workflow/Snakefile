@@ -1,0 +1,2 @@
+include: "rules/common.smk"
+include: "rules/adapters.smk"
