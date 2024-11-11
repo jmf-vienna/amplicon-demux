@@ -2,15 +2,17 @@ rule trim_adapter:
     input:
         "reads/{pool}.fastq.gz",
     output:
-        fastq="reads/adapter_trimmed/{pool}.fastq",
-        qc="reads/adapter_trimmed/{pool}.qc.txt",
+        trimmed="reads/adapter_trimmed/{pool}.fastq",
     params:
-        adapters="--front {front}".format(
-            front=get_config()["trimming"]["adapter"]["sequence"]
-        ),
-        extra=lambda wildcards: "--rename='{{header}} adapter={{match_sequence}}'".format(),
+        front=get_config()["trimming"]["adapter"]["sequence"],
     log:
-        "logs/{pool}.trim_adapter.log",
+        "reads/adapter_trimmed/{pool}.qc.txt",
     threads: 1
-    wrapper:
-        "v5.0.2/bio/cutadapt/se"
+    shell:
+        "cutadapt"
+        " --cores {threads}"
+        " --front {params.front}"
+        " --rename='{{header}} adapter={{match_sequence}}'"
+        " --output {output.trimmed}"
+        " {input}"
+        " > {log}"
