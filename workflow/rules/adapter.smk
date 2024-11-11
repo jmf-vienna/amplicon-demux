@@ -6,8 +6,8 @@ rule trim_adapter:
         untrimmed="reads/adapter_trimmed/{pool}.untrimmed.fastq",
         report="reads/adapter_trimmed/{pool}.json",
     params:
-        front=get_config()["trimming"]["adapter"]["sequence"],
-        error_rate=get_config()["trimming"]["adapter"]["error rate"],
+        front=get_config()["trim"]["adapter"]["sequence"],
+        error_rate=get_config()["trim"]["adapter"]["error rate"],
     log:
         "logs/{pool}.trim_adapter.log",
     threads: 1
