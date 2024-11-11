@@ -3,11 +3,12 @@ configfile: "config.yaml"
 
 include: "rules/common.smk"
 include: "rules/adapter.smk"
+include: "rules/demux.smk"
 
 
 rule all:
     input:
         expand(
-            "reads/adapter_trimmed/{pool}.fastq",
+            "reads/{pool}/unknown.fastq",
             pool=get_pool(),
         ),
