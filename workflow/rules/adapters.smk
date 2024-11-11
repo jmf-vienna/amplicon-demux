@@ -1,13 +1,16 @@
-rule front_adapter_trimmed:
+rule trim_adapter:
     input:
-        "in/{pool}.fastq.gz",
+        "reads/{pool}.fastq.gz",
     output:
-        "fastq/front_adapter_trimmed/{pool}.fastq",
+        fastq="reads/adapter_trimmed/{pool}.fastq",
+        qc="reads/adapter_trimmed/{pool}.qc.txt",
     params:
-        front=get_config()["trimming"]["adapter"]["sequence"],
-    shell:
-        "cutadapt"
-        " --front {params.front}"
-        " --rename='{{header}} front_adapter={{match_sequence}}'"
-        " --output {output}"
-        " {input}"
+        adapters="--front {front}".format(
+            front=get_config()["trimming"]["adapter"]["sequence"]
+        ),
+        extra=lambda wildcards: "--rename='{{header}} adapter={{match_sequence}}'".format(),
+    log:
+        "logs/{pool}.trim_adapter.log",
+    threads: 1
+    wrapper:
+        "v5.0.2/bio/cutadapt/se"
