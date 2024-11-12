@@ -1,9 +1,16 @@
+from Bio import SeqIO
+
+
+barcode_ids = [record.id for record in SeqIO.parse("config/barcodes.fna", "fasta")]
+barcode_ids.append("unknown")
+
+
 rule demux:
     input:
         reads="reads/adapter_trimmed/{pool}.fastq",
         barcodes="config/barcodes.fna",
     output:
-        untrimmed="reads/{pool}/unknown.fastq",
+        expand("reads/{{pool}}/{barcode_id}.fastq", barcode_id=barcode_ids),
         report="reads/{pool}/demux.json",
     params:
         error_rate=get_config()["trim"]["barcode"]["error rate"],
