@@ -7,16 +7,18 @@ rule trim_adapter:
         report="reads/adapter_trimmed/{pool}.json",
     params:
         front=get_config()["trim"]["adapter"]["sequence"],
+        back=Seq(get_config()["trim"]["adapter"]["sequence"]).reverse_complement(),
         error_rate=get_config()["trim"]["adapter"]["error rate"],
+        part="adapter",
     log:
         "logs/{pool}.trim_adapter.log",
     threads: 1
     shell:
         "cutadapt"
         " --cores {threads}"
-        " --front {params.front}"
         " --error-rate {params.error_rate}"
-        " --rename='{{header}} adapter={{match_sequence}}'"
+        " --front {params.front}...{params.back}"
+        " --rename='{{header}} {params.part}s={{match_sequence}}'"
         " --output {output.trimmed}"
         " --untrimmed-output {output.untrimmed}"
         " --json {output.report}"

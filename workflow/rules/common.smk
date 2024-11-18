@@ -1,3 +1,6 @@
+from Bio.Seq import Seq
+
+
 def get_config():
     return config["default"]
 
