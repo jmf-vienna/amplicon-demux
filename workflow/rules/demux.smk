@@ -1,7 +1,3 @@
-from Bio import SeqIO
-import os
-
-
 barcode_ids = [record.id for record in SeqIO.parse("config/barcodes.fna", "fasta")]
 barcode_ids.append("unknown")
 
