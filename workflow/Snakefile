@@ -8,7 +8,4 @@ include: "rules/demux.smk"
 
 rule all:
     input:
-        expand(
-            "reads/{pool}/unknown.fastq",
-            pool=get_pool(),
-        ),
+        expand("reads/raw/{demuxed_id}.fastq", demuxed_id=demuxed_ids),
