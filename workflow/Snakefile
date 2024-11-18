@@ -9,4 +9,4 @@ include: "rules/trim.smk"
 
 rule all:
     input:
-        expand("reads/barcode_trimmed/{sublib}.fastq", sublib=sublib_ids),
+        expand("reads/linker_trimmed/{sublib}.fastq", sublib=sublib_ids),
