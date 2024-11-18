@@ -22,7 +22,7 @@ rule trim_barcode:
     shell:
         "cutadapt"
         " --cores {threads}"
-        " --front {params.front}"
+        " --front ^{params.front}"
         " --error-rate {params.error_rate}"
         " --rename='{{header}} barcode={{match_sequence}}'"
         " --output {output.trimmed}"
