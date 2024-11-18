@@ -7,3 +7,5 @@ def get_pool():
 
 
 sublib_ids = get_config()["sublibraries"].keys()
+
+cutadapt_log_command = " | sed '/^Finished in /d' > {log}"

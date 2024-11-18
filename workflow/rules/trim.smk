@@ -20,8 +20,7 @@ trim_command = (
     " --untrimmed-output {output.untrimmed}"
     " --json {output.report}"
     " {input}"
-    " | sed '/^Finished in /d' > {log}"
-)
+) + cutadapt_log_command
 
 
 rule trim_barcode:
