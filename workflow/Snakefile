@@ -5,8 +5,9 @@ include: "rules/common.smk"
 include: "rules/adapter.smk"
 include: "rules/demux.smk"
 include: "rules/trim.smk"
+include: "rules/stats.smk"
 
 
 rule all:
     input:
-        expand("reads/primer_trimmed/{sublib}.fastq", sublib=sublib_ids),
+        "reads/seqkit_stats.tsv",
