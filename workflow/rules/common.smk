@@ -4,3 +4,6 @@ def get_config():
 
 def get_pool():
     return get_config()["pool"]["id"]
+
+
+sublib_ids = get_config()["sublibraries"].keys()

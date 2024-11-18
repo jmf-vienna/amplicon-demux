@@ -5,8 +5,6 @@ import os
 barcode_ids = [record.id for record in SeqIO.parse("config/barcodes.fna", "fasta")]
 barcode_ids.append("unknown")
 
-demuxed_ids = get_config()["demux"].keys()
-
 
 rule demux:
     input:
@@ -38,10 +36,10 @@ rule post_demux_rename:
             "reads/{pool}/{barcode_id}.fastq", pool=get_pool(), barcode_id=barcode_ids
         ),
     output:
-        expand("reads/raw/{demuxed_id}.fastq", demuxed_id=demuxed_ids),
+        expand("reads/raw/{sublib}.fastq", sublib=sublib_ids),
     run:
-        for id in demuxed_ids:
-            parts = get_config()["demux"][id]
+        for id in sublib_ids:
+            parts = get_config()["sublibraries"][id]
             os.symlink(
                 os.path.join(
                     "..",
