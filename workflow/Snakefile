@@ -4,8 +4,9 @@ configfile: "config.yaml"
 include: "rules/common.smk"
 include: "rules/adapter.smk"
 include: "rules/demux.smk"
+include: "rules/trim.smk"
 
 
 rule all:
     input:
-        expand("reads/raw/{sublib}.fastq", sublib=sublib_ids),
+        expand("reads/barcode_trimmed/{sublib}.fastq", sublib=sublib_ids),
