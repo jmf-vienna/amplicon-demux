@@ -6,8 +6,8 @@ rule trim_adapter:
         untrimmed="reads/adapter_trimmed/{pool}.untrimmed.fastq",
         report="reads/adapter_trimmed/{pool}.json",
     params:
-        front=get_config()["trim"]["adapter"]["sequence"],
-        back=Seq(get_config()["trim"]["adapter"]["sequence"]).reverse_complement(),
+        front=get_config()["trim"]["adapter"]["front"],
+        back=Seq(get_config()["trim"]["adapter"]["back"]).reverse_complement(),
         error_rate=get_config()["trim"]["adapter"]["error rate"],
         part="adapter",
     log:
@@ -17,7 +17,7 @@ rule trim_adapter:
         "cutadapt"
         " --cores {threads}"
         " --error-rate {params.error_rate}"
-        " --front {params.front}...{params.back}"
+        " --front X{params.front}...{params.back}X"
         " --rename='{{header}} {params.part}s={{match_sequence}}'"
         " --output {output.trimmed}"
         " --untrimmed-output {output.untrimmed}"
