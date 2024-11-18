@@ -20,10 +20,10 @@ rule demux:
     threads: 1
     shell:
         "cutadapt"
-        " --cores {threads}"
-        " --front ^file:{input.barcodes}"
-        " --error-rate {params.error_rate}"
         " --action=none"
+        " --cores {threads}"
+        " --error-rate {params.error_rate}"
+        " --front ^file:{input.barcodes}"
         " --output 'reads/{wildcards.pool}/{{name}}.fastq'"
         " --json {output.report}"
         " {input.reads}"
