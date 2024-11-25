@@ -1,5 +1,7 @@
-barcode_ids = [record.id for record in SeqIO.parse("config/barcodes.fna", "fasta")]
-barcode_ids.append("unknown")
+def get_barcode_ids():
+    barcode_ids = [record.id for record in SeqIO.parse("config/barcodes.fna", "fasta")]
+    barcode_ids.append("unknown")
+    return barcode_ids
 
 
 rule demux:
@@ -7,7 +9,7 @@ rule demux:
         reads="reads/pools/{pool}.trimmed.fastq",
         barcodes="config/barcodes.fna",
     output:
-        expand("reads/pools/{{pool}}/{barcode_id}.fastq", barcode_id=barcode_ids),
+        expand("reads/pools/{{pool}}/{barcode_id}.fastq", barcode_id=get_barcode_ids()),
         report="reads/pools/{pool}/demux.json",
     params:
         error_rate=get_config()["trim"]["barcode"]["error rate"],
@@ -31,12 +33,12 @@ rule post_demux_rename:
         expand(
             "reads/pools/{pool}/{barcode_id}.fastq",
             pool=get_pools(),
-            barcode_id=barcode_ids,
+            barcode_id=get_barcode_ids(),
         ),
     output:
-        expand("reads/raw/{sublib}.fastq", sublib=sublib_ids),
+        expand("reads/raw/{sublib}.fastq", sublib=get_sublib_ids()),
     run:
-        for id in sublib_ids:
+        for id in get_sublib_ids():
             parts = get_config()["sublibraries"][id]
             os.symlink(
                 os.path.join(
