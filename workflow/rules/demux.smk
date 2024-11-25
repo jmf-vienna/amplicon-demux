@@ -4,11 +4,11 @@ barcode_ids.append("unknown")
 
 rule demux:
     input:
-        reads="reads/adapter_trimmed/{pool}.fastq",
+        reads="reads/pools/{pool}.trimmed.fastq",
         barcodes="config/barcodes.fna",
     output:
-        expand("reads/{{pool}}/{barcode_id}.fastq", barcode_id=barcode_ids),
-        report="reads/{pool}/demux.json",
+        expand("reads/pools/{{pool}}/{barcode_id}.fastq", barcode_id=barcode_ids),
+        report="reads/pools/{pool}/demux.json",
     params:
         error_rate=get_config()["trim"]["barcode"]["error rate"],
     log:
@@ -20,7 +20,7 @@ rule demux:
         " --cores {threads}"
         " --error-rate {params.error_rate}"
         " --front ^file:{input.barcodes}"
-        " --output 'reads/{wildcards.pool}/{{name}}.fastq'"
+        " --output 'reads/pools/{wildcards.pool}/{{name}}.fastq'"
         " --json {output.report}"
         " {input.reads}"
         +cutadapt_log_command
@@ -29,7 +29,9 @@ rule demux:
 rule post_demux_rename:
     input:
         expand(
-            "reads/{pool}/{barcode_id}.fastq", pool=get_pool(), barcode_id=barcode_ids
+            "reads/pools/{pool}/{barcode_id}.fastq",
+            pool=get_pool(),
+            barcode_id=barcode_ids,
         ),
     output:
         expand("reads/raw/{sublib}.fastq", sublib=sublib_ids),
@@ -39,8 +41,7 @@ rule post_demux_rename:
             os.symlink(
                 os.path.join(
                     "..",
-                    "..",
-                    "reads",
+                    "pools",
                     get_pool(),
                     parts["front"]["barcode"] + ".fastq",
                 ),

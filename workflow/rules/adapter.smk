@@ -1,10 +1,10 @@
 rule trim_adapter:
     input:
-        "reads/{pool}.fastq.gz",
+        "reads/pools/{pool}.fastq.gz",
     output:
-        trimmed="reads/adapter_trimmed/{pool}.fastq",
-        untrimmed="reads/adapter_trimmed/{pool}.untrimmed.fastq",
-        report="reads/adapter_trimmed/{pool}.json",
+        trimmed="reads/pools/{pool}.trimmed.fastq",
+        untrimmed="reads/pools/{pool}.untrimmed.fastq",
+        report="reads/pools/{pool}.trim_adapter.json",
     params:
         front=get_config()["trim"]["adapter"]["front"],
         back=Seq(get_config()["trim"]["adapter"]["back"]).reverse_complement(),
