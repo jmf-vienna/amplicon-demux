@@ -7,8 +7,8 @@ def get_config():
     return config["default"]
 
 
-def get_pool():
-    return get_config()["pool"]["id"]
+def get_pools():
+    return set([v["pool"] for k, v in get_config()["sublibraries"].items()])
 
 
 sublib_ids = get_config()["sublibraries"].keys()

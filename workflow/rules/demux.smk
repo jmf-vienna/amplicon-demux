@@ -30,7 +30,7 @@ rule post_demux_rename:
     input:
         expand(
             "reads/pools/{pool}/{barcode_id}.fastq",
-            pool=get_pool(),
+            pool=get_pools(),
             barcode_id=barcode_ids,
         ),
     output:
@@ -42,7 +42,7 @@ rule post_demux_rename:
                 os.path.join(
                     "..",
                     "pools",
-                    get_pool(),
+                    parts["pool"],
                     parts["front"]["barcode"] + ".fastq",
                 ),
                 os.path.join("reads/raw", id + ".fastq"),
