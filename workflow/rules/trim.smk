@@ -1,29 +1,29 @@
-def get_sublib_config(sublib):
-    return get_config()["sublibraries"][sublib[0]]
+def get_library_config(library):
+    return get_config()["libraries"][library[0]]
 
 
-def sublib_front_barcode(sublib):
-    return get_sublib_config(sublib)["front"]["barcode"]
+def get_library_front_barcode(library):
+    return get_library_config(library)["front"]["barcode"]
 
 
-def sublib_back_barcode(sublib):
-    return Seq(get_sublib_config(sublib)["back"]["barcode"]).reverse_complement()
+def get_library_back_barcode(library):
+    return Seq(get_library_config(library)["back"]["barcode"]).reverse_complement()
 
 
-def sublib_front_linker(sublib):
-    return get_sublib_config(sublib)["front"]["linker"]
+def get_library_front_linker(library):
+    return get_library_config(library)["front"]["linker"]
 
 
-def sublib_back_linker(sublib):
-    return Seq(get_sublib_config(sublib)["back"]["linker"]).reverse_complement()
+def get_library_back_linker(library):
+    return Seq(get_library_config(library)["back"]["linker"]).reverse_complement()
 
 
-def sublib_front_primer(sublib):
-    return get_sublib_config(sublib)["front"]["primer"]
+def get_library_front_primer(library):
+    return get_library_config(library)["front"]["primer"]
 
 
-def sublib_back_primer(sublib):
-    return Seq(get_sublib_config(sublib)["back"]["primer"]).reverse_complement()
+def get_library_back_primer(library):
+    return Seq(get_library_config(library)["back"]["primer"]).reverse_complement()
 
 
 trim_command = (
@@ -41,18 +41,18 @@ trim_command = (
 
 rule trim_barcode:
     input:
-        "reads/raw/{sublib}.fastq",
+        "reads/raw/{library}.fastq",
     output:
-        trimmed="reads/barcode_trimmed/{sublib}.fastq",
-        untrimmed="reads/barcode_trimmed/{sublib}.untrimmed.fastq",
-        report="reads/barcode_trimmed/{sublib}.json",
+        trimmed="reads/barcode_trimmed/{library}.fastq",
+        untrimmed="reads/barcode_trimmed/{library}.untrimmed.fastq",
+        report="reads/barcode_trimmed/{library}.json",
     params:
-        front=sublib_front_barcode,
-        back=sublib_back_barcode,
-        error_rate=get_config()["trim"]["barcode"]["error rate"],
+        front=get_library_front_barcode,
+        back=get_library_back_barcode,
+        error_rate=get_config()["barcode"]["error rate"],
         part="barcode",
     log:
-        "logs/{sublib}.trim_barcode.log",
+        "logs/{library}.trim_barcode.log",
     threads: 1
     shell:
         trim_command
@@ -60,18 +60,18 @@ rule trim_barcode:
 
 rule trim_linker:
     input:
-        "reads/barcode_trimmed/{sublib}.fastq",
+        "reads/barcode_trimmed/{library}.fastq",
     output:
-        trimmed="reads/linker_trimmed/{sublib}.fastq",
-        untrimmed="reads/linker_trimmed/{sublib}.untrimmed.fastq",
-        report="reads/linker_trimmed/{sublib}.json",
+        trimmed="reads/linker_trimmed/{library}.fastq",
+        untrimmed="reads/linker_trimmed/{library}.untrimmed.fastq",
+        report="reads/linker_trimmed/{library}.json",
     params:
-        front=sublib_front_linker,
-        back=sublib_back_linker,
-        error_rate=get_config()["trim"]["linker"]["error rate"],
+        front=get_library_front_linker,
+        back=get_library_back_linker,
+        error_rate=get_config()["linker"]["error rate"],
         part="linker",
     log:
-        "logs/{sublib}.trim_linker.log",
+        "logs/{library}.trim_linker.log",
     threads: 1
     shell:
         trim_command
@@ -79,18 +79,18 @@ rule trim_linker:
 
 rule trim_primer:
     input:
-        "reads/linker_trimmed/{sublib}.fastq",
+        "reads/linker_trimmed/{library}.fastq",
     output:
-        trimmed="reads/primer_trimmed/{sublib}.fastq",
-        untrimmed="reads/primer_trimmed/{sublib}.untrimmed.fastq",
-        report="reads/primer_trimmed/{sublib}.json",
+        trimmed="reads/primer_trimmed/{library}.fastq",
+        untrimmed="reads/primer_trimmed/{library}.untrimmed.fastq",
+        report="reads/primer_trimmed/{library}.json",
     params:
-        front=sublib_front_primer,
-        back=sublib_back_primer,
-        error_rate=get_config()["trim"]["primer"]["error rate"],
+        front=get_library_front_primer,
+        back=get_library_back_primer,
+        error_rate=get_config()["primer"]["error rate"],
         part="primer",
     log:
-        "logs/{sublib}.trim_primer.log",
+        "logs/{library}.trim_primer.log",
     threads: 1
     shell:
         trim_command

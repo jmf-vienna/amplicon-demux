@@ -7,7 +7,5 @@
         "fasta",
         "fastq",
         "seqkit",
-        "sublib",
-        "sublibraries"
     ]
 }

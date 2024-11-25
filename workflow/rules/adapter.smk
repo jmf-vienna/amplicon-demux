@@ -6,9 +6,9 @@ rule trim_adapter:
         untrimmed="reads/pools/{pool}.untrimmed.fastq",
         report="reads/pools/{pool}.trim_adapter.json",
     params:
-        front=get_config()["trim"]["adapter"]["front"],
-        back=Seq(get_config()["trim"]["adapter"]["back"]).reverse_complement(),
-        error_rate=get_config()["trim"]["adapter"]["error rate"],
+        front=get_config()["adapter"]["front"],
+        back=Seq(get_config()["adapter"]["back"]).reverse_complement(),
+        error_rate=get_config()["adapter"]["error rate"],
         part="adapter",
     log:
         "logs/{pool}.trim_adapter.log",

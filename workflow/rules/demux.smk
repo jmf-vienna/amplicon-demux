@@ -12,7 +12,7 @@ rule demux:
         expand("reads/pools/{{pool}}/{barcode_id}.fastq", barcode_id=get_barcode_ids()),
         report="reads/pools/{pool}/demux.json",
     params:
-        error_rate=get_config()["trim"]["barcode"]["error rate"],
+        error_rate=get_config()["barcode"]["error rate"],
     log:
         "logs/{pool}.demux.log",
     threads: 1
@@ -36,10 +36,10 @@ rule post_demux_rename:
             barcode_id=get_barcode_ids(),
         ),
     output:
-        expand("reads/raw/{sublib}.fastq", sublib=get_sublib_ids()),
+        expand("reads/raw/{library}.fastq", library=get_library_ids()),
     run:
-        for id in get_sublib_ids():
-            parts = get_config()["sublibraries"][id]
+        for id in get_library_ids():
+            parts = get_config()["libraries"][id]
             os.symlink(
                 os.path.join(
                     "..",
