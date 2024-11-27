@@ -6,6 +6,7 @@
         "demux",
         "fasta",
         "fastq",
+        "nextflow",
         "seqkit",
     ]
 }
