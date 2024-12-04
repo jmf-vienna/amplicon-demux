@@ -10,4 +10,5 @@ include: "rules/stats.smk"
 
 rule all:
     input:
+        expand("reads/final/{library}.fastq", library=get_library_ids()),
         "reads/seqkit_stats.tsv",

@@ -94,3 +94,12 @@ rule trim_primer:
     threads: 1
     shell:
         trim_command
+
+rule final:
+    input:
+        "reads/primer_trimmed/{library}.fastq",
+    output:
+        "reads/final/{library}.fastq"
+    threads: 1
+    shell:
+        "cp {input} {output}"
