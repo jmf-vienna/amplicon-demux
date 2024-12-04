@@ -9,7 +9,7 @@ rule demux:
         error_rate=get_config()["barcode"]["error rate"],
     log:
         "logs/{pool}.demux.log",
-    threads: 1
+    threads: workflow.cores
     shell:
         "cutadapt"
         " --action=none"

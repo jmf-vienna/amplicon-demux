@@ -29,7 +29,6 @@ def get_library_back_primer(library):
 trim_command = (
     "cutadapt"
     " --adapter ^{params.front}...{params.back}$"
-    " --cores {threads}"
     " --error-rate {params.error_rate}"
     " --rename='{{header}} {params.part}s={{match_sequence}}'"
     " --output {output.trimmed}"
@@ -53,7 +52,6 @@ rule trim_barcode:
         part="barcode",
     log:
         "logs/{library}.trim_barcode.log",
-    threads: 1
     shell:
         trim_command
 
@@ -72,7 +70,6 @@ rule trim_linker:
         part="linker",
     log:
         "logs/{library}.trim_linker.log",
-    threads: 1
     shell:
         trim_command
 
@@ -91,7 +88,6 @@ rule trim_primer:
         part="primer",
     log:
         "logs/{library}.trim_primer.log",
-    threads: 1
     shell:
         trim_command
 
@@ -100,6 +96,5 @@ rule final:
         "reads/primer_trimmed/{library}.fastq",
     output:
         "reads/final/{library}.fastq"
-    threads: 1
     shell:
         "cp {input} {output}"

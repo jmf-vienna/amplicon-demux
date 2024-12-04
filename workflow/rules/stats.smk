@@ -6,7 +6,7 @@ rule stats:
         expand("reads/primer_trimmed/{library}.fastq", library=get_library_ids()),
     output:
         "reads/seqkit_stats.tsv",
-    threads: 4
+    threads: workflow.cores
     shell:
         "seqkit stats"
         " --all"

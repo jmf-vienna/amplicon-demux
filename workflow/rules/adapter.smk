@@ -12,7 +12,7 @@ rule trim_adapter:
         part="adapter",
     log:
         "logs/{pool}.trim_adapter.log",
-    threads: 1
+    threads: workflow.cores
     shell:
         "cutadapt"
         " --cores {threads}"
