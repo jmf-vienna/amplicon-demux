@@ -13,6 +13,3 @@ def get_pools():
 
 def get_library_ids():
     return get_config()["libraries"].keys()
-
-
-cutadapt_log_command = " | sed '/^Finished in /d' > {log}"

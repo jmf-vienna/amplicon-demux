@@ -19,7 +19,7 @@ rule demux:
         " --output 'reads/pools/{wildcards.pool}/{{name}}.fastq'"
         " --json {output.report}"
         " {input.reads}"
-        +cutadapt_log_command
+        " > {log}"
 
 
 rule post_demux_rename:

@@ -35,7 +35,8 @@ trim_command = (
     " --untrimmed-output {output.untrimmed}"
     " --json {output.report}"
     " {input}"
-) + cutadapt_log_command
+    " > {log}"
+)
 
 
 rule trim_barcode:
@@ -91,10 +92,11 @@ rule trim_primer:
     shell:
         trim_command
 
+
 rule final:
     input:
         "reads/primer_trimmed/{library}.fastq",
     output:
-        "reads/final/{library}.fastq"
+        "reads/final/{library}.fastq",
     shell:
         "cp {input} {output}"

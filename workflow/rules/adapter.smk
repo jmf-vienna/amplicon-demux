@@ -25,4 +25,4 @@ rule trim_adapter:
         " --untrimmed-output {output.untrimmed}"
         " --json {output.report}"
         " {input}"
-        +cutadapt_log_command
+        " > {log}"
