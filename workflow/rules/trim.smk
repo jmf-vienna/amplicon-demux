@@ -91,12 +91,3 @@ rule trim_primer:
         "logs/{library}.trim_primer.log",
     shell:
         trim_command
-
-
-rule final:
-    input:
-        "reads/primer_trimmed/{library}.fastq",
-    output:
-        "reads/final/{library}.fastq",
-    shell:
-        "cp {input} {output}"
