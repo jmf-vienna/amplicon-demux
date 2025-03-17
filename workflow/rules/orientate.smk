@@ -9,4 +9,4 @@ rule orientate:
     params:
         revcomp_flags=lambda wildcards: get_revcomp_flags(wildcards.library),
     shell:
-        "seqkit seq --seq-type dna --validate-seq {params.revcomp_flags} {input} > {output}"
+        "seqkit seq --seq-type dna --validate-seq --min-len 1 --remove-gaps {params.revcomp_flags} {input} > {output}"
