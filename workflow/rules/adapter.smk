@@ -4,9 +4,9 @@ if "adapter" in get_config():
         input:
             "reads/pools/{pool}.fastq.gz",
         output:
-            trimmed="reads/pools/{pool}.trimmed.fastq",
-            untrimmed="reads/pools/{pool}.untrimmed.fastq",
-            report="reads/pools/{pool}.trim_adapter.json",
+            trimmed=temp("reads/pools/{pool}.trimmed.fastq"),
+            untrimmed=temp("reads/pools/{pool}.untrimmed.fastq"),
+            report=temp("reads/pools/{pool}.trim_adapter.json"),
         params:
             front=get_config()["adapter"]["front"],
             back=Seq(get_config()["adapter"]["back"]).reverse_complement(),
@@ -35,7 +35,7 @@ else:
         input:
             "reads/pools/{pool}.fastq.gz",
         output:
-            "reads/pools/{pool}.trimmed.fastq",
+            temp("reads/pools/{pool}.trimmed.fastq"),
         log:
             "logs/{pool}.trim_adapter.log",
         shell:

@@ -43,9 +43,9 @@ rule trim_barcode:
     input:
         "reads/raw/{library}.fastq",
     output:
-        trimmed="reads/barcode_trimmed/{library}.fastq",
-        untrimmed="reads/barcode_trimmed/{library}.untrimmed.fastq",
-        report="reads/barcode_trimmed/{library}.json",
+        trimmed=temp("reads/barcode_trimmed/{library}.fastq"),
+        untrimmed=temp("reads/barcode_trimmed/{library}.untrimmed.fastq"),
+        report=temp("reads/barcode_trimmed/{library}.json"),
     params:
         front=get_library_front_barcode,
         back=get_library_back_barcode,
@@ -61,9 +61,9 @@ rule trim_linker:
     input:
         "reads/barcode_trimmed/{library}.fastq",
     output:
-        trimmed="reads/linker_trimmed/{library}.fastq",
-        untrimmed="reads/linker_trimmed/{library}.untrimmed.fastq",
-        report="reads/linker_trimmed/{library}.json",
+        trimmed=temp("reads/linker_trimmed/{library}.fastq"),
+        untrimmed=temp("reads/linker_trimmed/{library}.untrimmed.fastq"),
+        report=temp("reads/linker_trimmed/{library}.json"),
     params:
         front=get_library_front_linker,
         back=get_library_back_linker,
@@ -79,9 +79,9 @@ rule trim_primer:
     input:
         "reads/linker_trimmed/{library}.fastq",
     output:
-        trimmed="reads/primer_trimmed/{library}.fastq",
-        untrimmed="reads/primer_trimmed/{library}.untrimmed.fastq",
-        report="reads/primer_trimmed/{library}.json",
+        trimmed=temp("reads/primer_trimmed/{library}.fastq"),
+        untrimmed=temp("reads/primer_trimmed/{library}.untrimmed.fastq"),
+        report=temp("reads/primer_trimmed/{library}.json"),
     params:
         front=get_library_front_primer,
         back=get_library_back_primer,

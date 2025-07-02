@@ -1,5 +1,10 @@
 def get_revcomp_flags(library):
-    return "--reverse --complement" if get_config()["libraries"][library]["orientation"] == "reverse" else ""
+    return (
+        "--reverse --complement"
+        if get_config()["libraries"][library]["orientation"] == "reverse"
+        else ""
+    )
+
 
 rule orientate:
     input:

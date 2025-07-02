@@ -3,8 +3,8 @@ rule demux:
         reads="reads/pools/{pool}.trimmed.fastq",
         barcodes="config/barcodes.fna",
     output:
-        "reads/pools/{pool}/unknown.fastq",
-        report="reads/pools/{pool}/demux.json",
+        temp("reads/pools/{pool}/unknown.fastq"),
+        report=temp("reads/pools/{pool}/demux.json"),
     params:
         error_rate=get_config()["barcode"]["error rate"],
     log:
@@ -26,7 +26,7 @@ rule post_demux_rename:
     input:
         expand("reads/pools/{pool}/unknown.fastq", pool=get_pools()),
     output:
-        expand("reads/raw/{library}.fastq", library=get_library_ids()),
+        temp(expand("reads/raw/{library}.fastq", library=get_library_ids())),
     run:
         for id in get_library_ids():
             parts = get_config()["libraries"][id]
