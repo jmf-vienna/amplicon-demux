@@ -4,6 +4,7 @@
         "configfile",
         "cutadapt",
         "demux",
+        "envmodules",
         "fasta",
         "fastq",
         "revcomp",

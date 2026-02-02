@@ -17,6 +17,8 @@ if "adapter" in get_config():
         log:
             "logs/{pool}.trim_adapter.log",
         threads: workflow.cores
+        envmodules:
+            "cutadapt",
         shell:
             "cutadapt"
             " --cores {threads}"
