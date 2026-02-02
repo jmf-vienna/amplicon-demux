@@ -10,6 +10,8 @@ rule demux:
     log:
         "logs/{pool}.demux.log",
     threads: workflow.cores
+    envmodules:
+        "cutadapt",
     shell:
         "cutadapt"
         " --action=none"

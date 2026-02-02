@@ -53,6 +53,8 @@ rule trim_barcode:
         part="barcode",
     log:
         "logs/{library}.trim_barcode.log",
+    envmodules:
+        "cutadapt",
     shell:
         trim_command
 
@@ -71,6 +73,8 @@ rule trim_linker:
         part="linker",
     log:
         "logs/{library}.trim_linker.log",
+    envmodules:
+        "cutadapt",
     shell:
         trim_command
 
@@ -89,5 +93,7 @@ rule trim_primer:
         part="primer",
     log:
         "logs/{library}.trim_primer.log",
+    envmodules:
+        "cutadapt",
     shell:
         trim_command
