@@ -16,6 +16,8 @@ if "adapter" in get_config():
             part="adapter",
         log:
             "logs/{pool}.trim_adapter.log",
+        group:
+            "demux"
         threads: workflow.cores
         envmodules:
             "cutadapt",
@@ -40,6 +42,8 @@ else:
             temp("reads/pools/{pool}.trimmed.fastq"),
         log:
             "logs/{pool}.trim_adapter.log",
+        group:
+            "demux"
         shell:
             "zcat"
             " {input}"

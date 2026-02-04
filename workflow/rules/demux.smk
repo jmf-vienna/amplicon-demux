@@ -9,6 +9,8 @@ rule demux:
         error_rate=get_config()["barcode"]["error rate"],
     log:
         "logs/{pool}.demux.log",
+    group:
+        "demux"
     threads: workflow.cores
     envmodules:
         "cutadapt",
@@ -30,6 +32,8 @@ rule ignore_file:
         "reads/pools/{pool}/unknown.fastq",
     output:
         "reads/pools/{pool}/.gitignore",
+    group:
+        "demux"
     shell:
         "echo '*.fastq' > {output}"
 
@@ -39,6 +43,8 @@ rule post_demux_rename:
         expand("reads/pools/{pool}/.gitignore", pool=get_pools()),
     output:
         temp(expand("reads/raw/{library}.fastq", library=get_library_ids())),
+    group:
+        "demux"
     run:
         for id in get_library_ids():
             parts = get_config()["libraries"][id]
