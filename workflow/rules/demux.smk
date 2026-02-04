@@ -24,9 +24,19 @@ rule demux:
         " > {log}"
 
 
+# Due to performance reasons, not all demux output files are currently tracked by the workflow and can therefore not be marked as temp().
+rule ignore_file:
+    input:
+        "reads/pools/{pool}/unknown.fastq",
+    output:
+        "reads/pools/{pool}/.gitignore",
+    shell:
+        "echo '*.fastq' > {output}"
+
+
 rule post_demux_rename:
     input:
-        expand("reads/pools/{pool}/unknown.fastq", pool=get_pools()),
+        expand("reads/pools/{pool}/.gitignore", pool=get_pools()),
     output:
         temp(expand("reads/raw/{library}.fastq", library=get_library_ids())),
     run:
