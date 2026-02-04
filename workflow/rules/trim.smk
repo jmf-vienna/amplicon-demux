@@ -54,7 +54,7 @@ rule trim_barcode:
     log:
         "logs/{library}.trim_barcode.log",
     group:
-        "demux"
+        "trim"
     envmodules:
         "cutadapt",
     shell:
@@ -76,7 +76,7 @@ rule trim_linker:
     log:
         "logs/{library}.trim_linker.log",
     group:
-        "demux"
+        "trim"
     envmodules:
         "cutadapt",
     shell:
@@ -98,7 +98,7 @@ rule trim_primer:
     log:
         "logs/{library}.trim_primer.log",
     group:
-        "demux"
+        "trim"
     envmodules:
         "cutadapt",
     shell:

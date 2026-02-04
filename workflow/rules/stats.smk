@@ -7,8 +7,6 @@ rule stats:
         expand("reads/final/{library}.fastq", library=get_library_ids()),
     output:
         "reads/seqkit_stats.tsv",
-    group:
-        "demux"
     threads: workflow.cores
     shell:
         "seqkit stats"
