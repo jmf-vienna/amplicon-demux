@@ -7,7 +7,7 @@ def get_config():
 
 
 def get_pools():
-    return set([v["pool"] for k, v in get_config()["libraries"].items()])
+    return sorted(set([v["pool"] for k, v in get_config()["libraries"].items()]))
 
 
 def get_library_ids():
