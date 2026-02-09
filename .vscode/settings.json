@@ -3,6 +3,7 @@
         "barcodes",
         "configfile",
         "cutadapt",
+        "demultiplexed",
         "demux",
         "envmodules",
         "fasta",

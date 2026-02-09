@@ -2,11 +2,11 @@ if "adapter" in get_config():
 
     rule trim_adapter:
         input:
-            "reads/pools/{pool}.fastq.gz",
+            "reads/pool_raw/{pool}.fastq.gz",
         output:
-            trimmed=temp("reads/pools/{pool}.trimmed.fastq"),
-            untrimmed=temp("reads/pools/{pool}.untrimmed.fastq"),
-            report=temp("reads/pools/{pool}.trim_adapter.json"),
+            trimmed=temp("reads/pool_adapter_trimmed/{pool}.fastq"),
+            untrimmed=temp("reads/pool_adapter_trimmed/{pool}.untrimmed.fastq"),
+            report=temp("reads/pool_adapter_trimmed/{pool}.trim_adapter.json"),
         params:
             front=get_config()["adapter"]["front"],
             back=Seq(get_config()["adapter"]["back"]).reverse_complement(),
@@ -37,9 +37,9 @@ else:
 
     rule do_not_trim_adapter:
         input:
-            "reads/pools/{pool}.fastq.gz",
+            "reads/pool_raw/{pool}.fastq.gz",
         output:
-            temp("reads/pools/{pool}.trimmed.fastq"),
+            temp("reads/pool_adapter_trimmed/{pool}.fastq"),
         log:
             "logs/{pool}.trim_adapter.log",
         group:
