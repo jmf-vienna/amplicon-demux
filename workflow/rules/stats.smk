@@ -1,5 +1,7 @@
 rule stats:
     input:
+        expand("reads/pools/{pool}.fastq.gz", pool=get_pools()),
+        expand("reads/pools/{pool}.trimmed.fastq", pool=get_pools()),
         expand("reads/raw/{library}.fastq", library=get_library_ids()),
         expand("reads/barcode_trimmed/{library}.fastq", library=get_library_ids()),
         expand("reads/linker_trimmed/{library}.fastq", library=get_library_ids()),
