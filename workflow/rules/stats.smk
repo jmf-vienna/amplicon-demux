@@ -14,5 +14,6 @@ rule stats:
         " --all"
         " --tabular"
         " --threads {threads}"
+        " --quiet"
         " {input}"
         " > {output}"
