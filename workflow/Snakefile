@@ -5,7 +5,7 @@ include: "rules/common.smk"
 include: "rules/adapter.smk"
 include: "rules/demux.smk"
 include: "rules/trim.smk"
-include: "rules/orientate.smk"
+include: "rules/finalize.smk"
 include: "rules/stats.smk"
 
 

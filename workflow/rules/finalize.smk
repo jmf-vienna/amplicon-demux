@@ -6,7 +6,7 @@ def get_revcomp_flags(library):
     )
 
 
-rule orientate:
+rule finalize:
     input:
         "reads/primer_trimmed/{library}.fastq",
     output:
