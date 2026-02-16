@@ -12,3 +12,11 @@ def get_pools():
 
 def get_library_ids():
     return get_config()["libraries"].keys()
+
+
+def get_min_length():
+    return get_config()["read length"]["min"]
+
+
+def get_max_length():
+    return get_config()["read length"]["max"]
