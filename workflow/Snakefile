@@ -12,3 +12,4 @@ include: "rules/stats.smk"
 rule all:
     input:
         "reads/seqkit_stats.tsv",
+        "reads/length_distribution.tsv",
