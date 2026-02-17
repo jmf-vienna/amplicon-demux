@@ -37,6 +37,7 @@ rule read_length_distribution_meta:
 
 
 length_command = "awk 'NR % 4 == 2 {{ print length($0) }}' {input} | sort --numeric-sort | uniq --count > {output}"
+length_command_gz = "zcat {input} | awk 'NR % 4 == 2 {{ print length($0) }}' | sort --numeric-sort | uniq --count > {output}"
 
 
 rule read_length_distribution_pool_gz:
@@ -45,7 +46,7 @@ rule read_length_distribution_pool_gz:
     output:
         "reads/length_distribution/pool_{step}.tsv",
     shell:
-        length_command
+        length_command_gz
 
 
 rule read_length_distribution_pool:
