@@ -5,12 +5,12 @@ rule library_count_table:
         temp("reads/final/{library}.tsv"),
     shell:
         "seqkit fx2tab"
+        " --seq-hash"
         " --threads {threads}"
         " {input} |"
-        " cut --fields 8 |"
+        " cut --fields 8,10 |"
         " sort | uniq --count |"
-        " sed -e 's/^ \\+//' -e 's/ /\t/' -e 's/$/\t{wildcards.library}/' |"
-        " awk '{{ print $2, $3, $1 }}' OFS='\t'"
+        " sed -e 's/^ \\+//' -e 's/ /\t/' -e 's/$/\t{wildcards.library}/'"
         " > {output}"
 
 
@@ -20,8 +20,8 @@ rule count_table:
     output:
         "reads/counts.tsv",
     shell:
-        "echo -e 'sequence\\tlibrary_ID\\tcount' > {output} && "
-        "cat {input} | sort >> {output}"
+        "echo -e 'feature_ID\\tlibrary_ID\\tcount' > {output} &&"
+        " awk '{{ print $3, $4, $1 }}' OFS='\t' {input} | sort >> {output}"
 
 
 rule sequences_table:
@@ -30,7 +30,7 @@ rule sequences_table:
     output:
         "reads/features.tsv",
     shell:
-        "echo sequence > {output} &&"
-        " cut --fields 1 {input} |"
+        "echo -e 'feature_ID\\tsequence' > {output} &&"
+        " awk '{{ print $3, $2 }}' OFS='\t' {input} |"
         " sort | uniq"
         " >> {output}"
