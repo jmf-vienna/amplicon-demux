@@ -7,6 +7,7 @@ include: "rules/demux.smk"
 include: "rules/trim.smk"
 include: "rules/finalize.smk"
 include: "rules/stats.smk"
+include: "rules/unique.smk"
 
 
 rule all:
