@@ -46,17 +46,17 @@ rule trim_barcode:
         trimmed=temp("reads/barcode_trimmed/{library}.fastq"),
         untrimmed=temp("reads/barcode_trimmed/{library}.untrimmed.fastq"),
         report=temp("reads/barcode_trimmed/{library}.json"),
-    params:
-        front=get_library_front_barcode,
-        back=get_library_back_barcode,
-        error_rate=get_config()["barcode"]["error rate"],
-        part="barcode",
     log:
         "logs/{library}.trim_barcode.log",
     group:
         "trim"
     envmodules:
         "cutadapt",
+    params:
+        front=get_library_front_barcode,
+        back=get_library_back_barcode,
+        error_rate=get_config()["barcode"]["error rate"],
+        part="barcode",
     shell:
         trim_command
 
@@ -68,17 +68,17 @@ rule trim_linker:
         trimmed=temp("reads/linker_trimmed/{library}.fastq"),
         untrimmed=temp("reads/linker_trimmed/{library}.untrimmed.fastq"),
         report=temp("reads/linker_trimmed/{library}.json"),
-    params:
-        front=get_library_front_linker,
-        back=get_library_back_linker,
-        error_rate=get_config()["linker"]["error rate"],
-        part="linker",
     log:
         "logs/{library}.trim_linker.log",
     group:
         "trim"
     envmodules:
         "cutadapt",
+    params:
+        front=get_library_front_linker,
+        back=get_library_back_linker,
+        error_rate=get_config()["linker"]["error rate"],
+        part="linker",
     shell:
         trim_command
 
@@ -90,16 +90,16 @@ rule trim_primer:
         trimmed=temp("reads/primer_trimmed/{library}.fastq"),
         untrimmed=temp("reads/primer_trimmed/{library}.untrimmed.fastq"),
         report=temp("reads/primer_trimmed/{library}.json"),
-    params:
-        front=get_library_front_primer,
-        back=get_library_back_primer,
-        error_rate=get_config()["primer"]["error rate"],
-        part="primer",
     log:
         "logs/{library}.trim_primer.log",
     group:
         "trim"
     envmodules:
         "cutadapt",
+    params:
+        front=get_library_front_primer,
+        back=get_library_back_primer,
+        error_rate=get_config()["primer"]["error rate"],
+        part="primer",
     shell:
         trim_command

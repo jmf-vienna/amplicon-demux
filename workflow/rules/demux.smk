@@ -5,15 +5,15 @@ rule demux:
     output:
         temp("reads/demultiplexed/{pool}/unknown.fastq"),
         report=temp("reads/demultiplexed/{pool}/demux.json"),
-    params:
-        error_rate=get_config()["barcode"]["error rate"],
     log:
         "logs/{pool}.demux.log",
     group:
         "demux"
-    threads: workflow.cores
     envmodules:
         "cutadapt",
+    threads: workflow.cores
+    params:
+        error_rate=get_config()["barcode"]["error rate"],
     shell:
         "cutadapt"
         " --action=none"

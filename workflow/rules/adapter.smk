@@ -7,6 +7,13 @@ if "adapter" in get_config():
             trimmed=temp("reads/pool_adapter_trimmed/{pool}.fastq"),
             untrimmed=temp("reads/pool_adapter_trimmed/{pool}.untrimmed.fastq"),
             report=temp("reads/pool_adapter_trimmed/{pool}.trim_adapter.json"),
+        log:
+            "logs/{pool}.trim_adapter.log",
+        group:
+            "demux"
+        envmodules:
+            "cutadapt",
+        threads: workflow.cores
         params:
             front=get_config()["adapter"]["front"],
             back=Seq(get_config()["adapter"]["back"]).reverse_complement(),
@@ -14,13 +21,6 @@ if "adapter" in get_config():
             back_min_overlap=get_config()["adapter"]["min overlap"],
             error_rate=get_config()["adapter"]["error rate"],
             part="adapter",
-        log:
-            "logs/{pool}.trim_adapter.log",
-        group:
-            "demux"
-        threads: workflow.cores
-        envmodules:
-            "cutadapt",
         shell:
             "cutadapt"
             " --cores {threads}"
@@ -45,7 +45,4 @@ else:
         group:
             "demux"
         shell:
-            "zcat"
-            " {input}"
-            " > {output}"
-            " 2> {log}"
+            "zcat" " {input}" " > {output}" " 2> {log}"
