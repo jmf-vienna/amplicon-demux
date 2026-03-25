@@ -37,3 +37,26 @@ rule sequences_table:
         " awk '{{ print $4, $2, $3 }}' OFS='\t' {input} |"
         " sort | uniq"
         " >> {output}"
+
+
+rule duplicate_reads:
+    input:
+        expand("reads/final/{library}.fastq", library=get_library_ids()),
+    output:
+        "reads/duplicate_reads.txt",
+    shell:
+        "seqkit fx2tab"
+        " --name --only-id"
+        " --threads {threads}"
+        " {input} |"
+        " sort | uniq --repeated"
+        " > {output}"
+
+
+rule duplicate_reads_check:
+    input:
+        "reads/duplicate_reads.txt",
+    output:
+        touch("reads/duplicate_reads_check.done"),
+    shell:
+        "diff <(echo -n) {input}"

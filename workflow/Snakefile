@@ -14,3 +14,6 @@ rule all:
     input:
         "reads/seqkit_stats.tsv",
         "reads/length_distribution.tsv",
+        "reads/duplicate_reads_check.done",
+    output:
+        touch("reads/.done"),
