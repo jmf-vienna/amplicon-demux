@@ -47,13 +47,13 @@ rule post_demux_rename:
         "demux"
     run:
         for id in get_library_ids():
-            parts = get_config()["libraries"][id]
+            parts = libraries[id]
             os.symlink(
                 os.path.join(
                     "..",
                     "demultiplexed",
                     parts["pool"],
-                    parts["front"]["barcode"] + ".fastq",
+                    parts["front_barcode"] + ".fastq",
                 ),
                 os.path.join("reads/raw", id + ".fastq"),
             )

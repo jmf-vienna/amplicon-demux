@@ -1,29 +1,29 @@
 def get_library_config(library):
-    return get_config()["libraries"][library[0]]
+    return libraries[library[0]]
 
 
 def get_library_front_barcode(library):
-    return get_library_config(library)["front"]["barcode"]
+    return get_library_config(library)["front_barcode"]
 
 
 def get_library_back_barcode(library):
-    return Seq(get_library_config(library)["back"]["barcode"]).reverse_complement()
+    return Seq(get_library_config(library)["back_barcode"]).reverse_complement()
 
 
 def get_library_front_linker(library):
-    return get_library_config(library)["front"]["linker"]
+    return get_library_config(library)["front_linker"]
 
 
 def get_library_back_linker(library):
-    return Seq(get_library_config(library)["back"]["linker"]).reverse_complement()
+    return Seq(get_library_config(library)["back_linker"]).reverse_complement()
 
 
 def get_library_front_primer(library):
-    return get_library_config(library)["front"]["primer"]
+    return get_library_config(library)["front_primer"]
 
 
 def get_library_back_primer(library):
-    return Seq(get_library_config(library)["back"]["primer"]).reverse_complement()
+    return Seq(get_library_config(library)["back_primer"]).reverse_complement()
 
 
 trim_command = (
