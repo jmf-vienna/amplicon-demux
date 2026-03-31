@@ -36,24 +36,29 @@ rule read_length_distribution_meta:
         "echo {input} | sed 's/ /\\n/g' > {output}"
 
 
-length_command = "awk 'NR % 4 == 2 {{ print length($0) }}' {input} | sort --numeric-sort | uniq --count > {output}"
-length_command_gz = "zcat {input} | awk 'NR % 4 == 2 {{ print length($0) }}' | sort --numeric-sort | uniq --count > {output}"
-
-
 rule read_length_distribution_pool_gz:
     input:
-        expand("reads/pool_raw/{pool}.fastq.gz", pool=get_pools()),
+        expand("reads/pool_raw/{pool}.fastq.gz", pool=raw_pools),
     output:
         "reads/length_distribution/pool_raw.tsv",
     shell:
-        length_command_gz
+        """
+        if [ {input} ]; then
+            zcat {input} | awk 'NR % 4 == 2 {{ print length($0) }}' | sort --numeric-sort | uniq --count > {output}
+        else
+            touch {output}
+        fi
+        """
+
+
+length_command = "awk 'NR % 4 == 2 {{ print length($0) }}' {input} | sort --numeric-sort | uniq --count > {output}"
 
 
 rule read_length_distribution_pool:
     input:
-        expand("reads/pool_{{step}}/{pool}.fastq", pool=get_pools()),
+        expand("reads/pool_adapter_trimmed/{pool}.fastq", pool=get_pools()),
     output:
-        "reads/length_distribution/pool_{step}.tsv",
+        "reads/length_distribution/pool_adapter_trimmed.tsv",
     shell:
         length_command
 
