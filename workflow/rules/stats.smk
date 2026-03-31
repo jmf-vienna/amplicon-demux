@@ -2,11 +2,11 @@ rule stats:
     input:
         expand("reads/pool_raw/{pool}.fastq.gz", pool=get_pools()),
         expand("reads/pool_adapter_trimmed/{pool}.fastq", pool=get_pools()),
-        expand("reads/raw/{library}.fastq", library=get_library_ids()),
-        expand("reads/barcode_trimmed/{library}.fastq", library=get_library_ids()),
-        expand("reads/linker_trimmed/{library}.fastq", library=get_library_ids()),
-        expand("reads/primer_trimmed/{library}.fastq", library=get_library_ids()),
-        expand("reads/final/{library}.fastq", library=get_library_ids()),
+        expand("reads/raw/{library}.fastq", library=libraries.keys()),
+        expand("reads/barcode_trimmed/{library}.fastq", library=libraries.keys()),
+        expand("reads/linker_trimmed/{library}.fastq", library=libraries.keys()),
+        expand("reads/primer_trimmed/{library}.fastq", library=libraries.keys()),
+        expand("reads/final/{library}.fastq", library=libraries.keys()),
     output:
         "reads/seqkit_stats.tsv",
     threads: workflow.cores
@@ -60,7 +60,7 @@ rule read_length_distribution_pool:
 
 rule read_length_distribution:
     input:
-        expand("reads/{{step}}/{library}.fastq", library=get_library_ids()),
+        expand("reads/{{step}}/{library}.fastq", library=libraries.keys()),
     output:
         "reads/length_distribution/{step}.tsv",
     shell:

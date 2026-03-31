@@ -17,10 +17,6 @@ def get_pools():
     return sorted(set([v["pool"] for k, v in libraries.items()]))
 
 
-def get_library_ids():
-    return libraries.keys()
-
-
 def get_min_length():
     return get_config()["read length"]["min"]
 

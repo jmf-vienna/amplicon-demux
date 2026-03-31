@@ -19,7 +19,7 @@ rule library_count_table:
 
 rule count_table:
     input:
-        expand("reads/final/{library}.tsv", library=get_library_ids()),
+        expand("reads/final/{library}.tsv", library=libraries.keys()),
     output:
         "reads/counts.tsv",
     shell:
@@ -29,7 +29,7 @@ rule count_table:
 
 rule sequences_table:
     input:
-        expand("reads/final/{library}.tsv", library=get_library_ids()),
+        expand("reads/final/{library}.tsv", library=libraries.keys()),
     output:
         "reads/features.tsv",
     shell:
@@ -41,7 +41,7 @@ rule sequences_table:
 
 rule duplicate_reads:
     input:
-        expand("reads/final/{library}.fastq", library=get_library_ids()),
+        expand("reads/final/{library}.fastq", library=libraries.keys()),
     output:
         "reads/duplicate_reads.txt",
     shell:

@@ -42,12 +42,11 @@ rule post_demux_rename:
     input:
         expand("reads/demultiplexed/{pool}/.gitignore", pool=get_pools()),
     output:
-        temp(expand("reads/raw/{library}.fastq", library=get_library_ids())),
+        temp(expand("reads/raw/{library}.fastq", library=libraries.keys())),
     group:
         "demux"
     run:
-        for id in get_library_ids():
-            parts = libraries[id]
+        for parts in libraries.values():
             os.symlink(
                 os.path.join(
                     "..",
@@ -55,5 +54,5 @@ rule post_demux_rename:
                     parts["pool"],
                     parts["front_barcode"] + ".fastq",
                 ),
-                os.path.join("reads/raw", id + ".fastq"),
+                os.path.join("reads/raw", parts["id"] + ".fastq"),
             )
