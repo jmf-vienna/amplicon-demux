@@ -1,7 +1,7 @@
 rule demux:
     input:
         reads="reads/pool_adapter_trimmed/{pool}.fastq",
-        barcodes="config/barcodes.fna",
+        barcodes="barcodes.fna",
     output:
         temp("reads/demultiplexed/{pool}/unknown.fastq"),
         report=temp("reads/demultiplexed/{pool}/demux.json"),
