@@ -8,6 +8,9 @@ with open("demux.tsv") as tsv_file:
     for row in reader:
         libraries[row["id"]] = row
 
+(raw_pools,) = glob_wildcards("reads/pool_raw/{name}.fastq.gz")
+(trimmed_pools,) = glob_wildcards("reads/pool_adapter_trimmed/{name}.fastq.gz")
+
 
 def get_config():
     return config["default"]["demux"]

@@ -48,8 +48,6 @@ rule trim_barcode:
         report=temp("reads/barcode_trimmed/{library}.json"),
     log:
         "logs/{library}.trim_barcode.log",
-    group:
-        "trim"
     envmodules:
         "cutadapt",
     params:
@@ -70,8 +68,6 @@ rule trim_linker:
         report=temp("reads/linker_trimmed/{library}.json"),
     log:
         "logs/{library}.trim_linker.log",
-    group:
-        "trim"
     envmodules:
         "cutadapt",
     params:
@@ -92,8 +88,6 @@ rule trim_primer:
         report=temp("reads/primer_trimmed/{library}.json"),
     log:
         "logs/{library}.trim_primer.log",
-    group:
-        "trim"
     envmodules:
         "cutadapt",
     params:

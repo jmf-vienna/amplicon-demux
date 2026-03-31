@@ -1,6 +1,6 @@
 rule stats:
     input:
-        expand("reads/pool_raw/{pool}.fastq.gz", pool=get_pools()),
+        expand("reads/pool_raw/{pool}.fastq.gz", pool=raw_pools),
         expand("reads/pool_adapter_trimmed/{pool}.fastq", pool=get_pools()),
         expand("reads/raw/{library}.fastq", library=libraries.keys()),
         expand("reads/barcode_trimmed/{library}.fastq", library=libraries.keys()),
@@ -42,9 +42,9 @@ length_command_gz = "zcat {input} | awk 'NR % 4 == 2 {{ print length($0) }}' | s
 
 rule read_length_distribution_pool_gz:
     input:
-        expand("reads/pool_{{step}}/{pool}.fastq.gz", pool=get_pools()),
+        expand("reads/pool_raw/{pool}.fastq.gz", pool=get_pools()),
     output:
-        "reads/length_distribution/pool_{step}.tsv",
+        "reads/length_distribution/pool_raw.tsv",
     shell:
         length_command_gz
 

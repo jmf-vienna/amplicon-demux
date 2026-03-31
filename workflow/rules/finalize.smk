@@ -11,8 +11,6 @@ rule finalize:
         "reads/primer_trimmed/{library}.fastq",
     output:
         "reads/final/{library}.fastq",
-    group:
-        "trim"
     params:
         revcomp_flags=lambda wildcards: get_revcomp_flags(wildcards.library),
         min_len=get_min_length(),

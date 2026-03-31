@@ -7,8 +7,6 @@ rule demux:
         report=temp("reads/demultiplexed/{pool}/demux.json"),
     log:
         "logs/{pool}.demux.log",
-    group:
-        "demux"
     envmodules:
         "cutadapt",
     threads: workflow.cores
@@ -32,8 +30,6 @@ rule ignore_file:
         "reads/demultiplexed/{pool}/unknown.fastq",
     output:
         "reads/demultiplexed/{pool}/.gitignore",
-    group:
-        "demux"
     shell:
         "echo '*.fastq' > {output}"
 
@@ -43,8 +39,6 @@ rule post_demux_rename:
         expand("reads/demultiplexed/{pool}/.gitignore", pool=get_pools()),
     output:
         temp(expand("reads/raw/{library}.fastq", library=libraries.keys())),
-    group:
-        "demux"
     run:
         for parts in libraries.values():
             os.symlink(
