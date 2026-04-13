@@ -11,10 +11,10 @@ rule trim_adapter:
         "cutadapt",
     threads: workflow.cores
     params:
-        front=get_config()["adapter"]["front"],
-        back=Seq(get_config()["adapter"]["back"]).reverse_complement(),
-        front_min_overlap=get_config()["adapter"]["min overlap"],
-        back_min_overlap=get_config()["adapter"]["min overlap"],
+        front=get_config()["adapter"]["front"]["sequence"],
+        back=Seq(get_config()["adapter"]["back"]["sequence"]).reverse_complement(),
+        front_min_overlap=get_config()["adapter"]["front"]["min overlap"],
+        back_min_overlap=get_config()["adapter"]["back"]["min overlap"],
         error_rate=get_config()["adapter"]["error rate"],
         part="adapter",
     shell:
